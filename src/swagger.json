@@ -1,0 +1,194 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Atlas",
+    "description": "Esta é a documentação da API Atlas",
+    "version": "1.0.0",
+    "contact": {
+      "email": "luiiz.silverio@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "users",
+      "description": "Gerenciamento de usuários"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "description": "Gerenciamento de usuários",
+      "post": {
+        "summary": "Cria um novo usuário",
+        "tags": ["users"],
+        "requestBody": {
+          "description": "Campos obrigatórios para criação de um usuário.",
+          "content": {
+            "application/json": {
+              "schema": { 
+                "type": "object",
+                "properties": {
+                  "name": { 
+                    "type": "string"                    
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Luiz",
+                  "email": "luiiz.silverio@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  },
+                  "example": {
+                    "id": "46eb12b1-4b2c-443d-b75b-42e028193701",
+                    "name": "Luiiz",
+                    "email": "luiiz.silverio@gmail.com",
+                    "admin": true,
+                    "created_at": "2021-09-09T17:30:53.837Z",
+                    "updated_at": "2021-09-09T17:30:53.837Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário já existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { 
+                      "type": "string"                    
+                    }
+                  },
+                  "example": {
+                    "error": "Usuário já existe"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["users"],
+        "summary": "Retorna todos os usuários",
+        "description": "Somente permitido para usuário Admin",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],        
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  },
+                  "example": {
+                    "id": "46eb12b1-4b2c-443d-b75b-42e028193701",
+                    "name": "Luiiz",
+                    "email": "luiiz.silverio@gmail.com",
+                    "admin": true,
+                    "created_at": "2021-09-09T17:30:53.837Z",
+                    "updated_at": "2021-09-09T17:30:53.837Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário não é Admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { 
+                      "type": "string"                    
+                    }
+                  },
+                  "example": {
+                    "error": "Usuário não é Admin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

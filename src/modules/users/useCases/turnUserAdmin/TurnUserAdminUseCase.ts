@@ -12,7 +12,7 @@ class TurnUserAdminUseCase {
     const userExists = this.usersRepository.findById(user_id)
 
     if (!userExists) {
-      throw new Error("User does not exist")
+      throw new Error("Usuário não cadastrado")
     }
     
     const user = this.usersRepository.turnAdmin(userExists)
